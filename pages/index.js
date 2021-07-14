@@ -1,8 +1,8 @@
 import { Box } from '../src/components/Box'
 import { MainGrid } from '../src/components/MainGrid'
 import { AlurakutMenu, AlurakutProfileSidebarMenuDefault, OrkutNostalgicIconSet } from '../src/lib/AluraKutCommons'
-import { ProfileRelationsBoxWrapper } from '../src/components/ProfileRelations'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { ProfileComponentBox } from '../src/components/ProfileRelations'
 
 const ProfileSidebar = (props) => {
   return(
@@ -28,13 +28,21 @@ export default function Home() {
     image: 'https://alurakut.vercel.app/capa-comunidade-01.jpg'
   }])
   const favoritePeople = [
-    'juunegreiros', 
-    'omariosouto', 
-    'peas', 
-    'rafaballerini',
-    'marcobrunodev',
-    'felipefialho'
+    {name: 'juunegreiros', id: 1 }, 
+    {name: 'omariosouto', id: 2}, 
+    {name: 'peas', id: 3}, 
+    {name: 'rafaballerini', id: 4},
+    {name: 'marcobrunodev', id: 5},
+    {name: 'phmc99', id: 6}
   ]
+  const [seguidores, setSeguidores] = useState([])
+
+  useEffect(() => {
+    fetch('https://api.github.com/users/omariosouto/followers')
+      .then((response) => response.json())
+      .then((response) => setSeguidores(response))
+  } , [])
+  
 
   const handleSubmitForm = (e) => {
     e.preventDefault()
@@ -89,42 +97,13 @@ export default function Home() {
           </Box>
         </div>
         <div className='profileRelationsArea' style={{ gridArea: 'profileRelationsArea' }}>
-        <ProfileRelationsBoxWrapper>
-          <h2 className='smallTitle'>
-            Comunidades ({ comunity.length })
-          </h2>
-          
-          <ul>
-            {comunity.map(elm => {
-              return (
-                <li key={elm.id}>
-                  <a href={`/users/${elm.title}`}>
-                    <img src={elm.image}/>
-                    <span>{elm.title}</span>
-                  </a>
-                </li>
-              )
-            })}
-          </ul>
-        </ProfileRelationsBoxWrapper>
-        <ProfileRelationsBoxWrapper>
-          <h2 className='smallTitle'>
-            Amigos ({ favoritePeople.length })
-          </h2>
-          
-          <ul>
-          {favoritePeople.map(elm => {
-            return (
-              <li key={elm}>
-                <a href={`/users/${elm}`}>
-                  <img src={`https://github.com/${elm}.png`}/>
-                  <span>{elm}</span>
-                </a>
-              </li>
-            )
-          })}
-        </ul>
-        </ProfileRelationsBoxWrapper>
+        
+        <ProfileComponentBox title='Seguidores' array={seguidores}/>
+        
+        <ProfileComponentBox title='Comunidades' array={comunity}/>
+        
+        <ProfileComponentBox title='Amigos' array={favoritePeople}/>
+        
         </div>
       </MainGrid>
     </>

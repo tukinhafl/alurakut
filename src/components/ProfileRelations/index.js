@@ -1,6 +1,29 @@
 import styled from 'styled-components'
 import { Box } from '../Box'
 
+export const ProfileComponentBox = ( { title, array } ) => {
+  return (
+    <ProfileRelationsBoxWrapper>
+      <h2 className='smallTitle'>
+        {title} ({ array.length })
+      </h2>
+      
+      <ul>
+        {array.map(elm => {
+          return (
+            <li key={elm.id}>
+              <a href={`https://github.com/${elm}.png`}>
+                <img src={elm.image ? elm.image : (elm.avatar_url || `https://github.com/${elm.name}.png`)}/>
+                <span>{elm.title ? elm.title : (elm.login || elm.name)}</span>
+              </a>
+            </li>
+          )
+        })}
+      </ul>
+    </ProfileRelationsBoxWrapper>
+  )
+}
+
 export const ProfileRelationsBoxWrapper = styled(Box)`
   ul {
     display: grid;
@@ -8,6 +31,7 @@ export const ProfileRelationsBoxWrapper = styled(Box)`
     grid-template-columns: 1fr 1fr 1fr;
     max-height: 220px;
     list-style: none;
+    overflow: hidden;
   }
 
   img {
