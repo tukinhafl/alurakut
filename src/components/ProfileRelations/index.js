@@ -13,7 +13,7 @@ export const ProfileComponentBox = ( { title, array } ) => {
           return (
             <li key={elm.id}>
               <a href={`https://github.com/${elm}.png`}>
-                <img src={elm.image ? elm.image : (elm.avatar_url || `https://github.com/${elm.name}.png`)}/>
+                <img src={elm.imageUrl ? elm.imageUrl : (elm.avatar_url || `https://github.com/${elm.name}.png`)}/>
                 <span>{elm.title ? elm.title : (elm.login || elm.name)}</span>
               </a>
             </li>

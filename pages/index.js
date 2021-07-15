@@ -22,11 +22,7 @@ const ProfileSidebar = (props) => {
 
 export default function Home() {
   const githubUser = 'tukinhafl'
-  const [comunity, setComunity] = useState([{
-    id: '172462138746192461287',
-    title: 'Eu odeio acordar cedo',
-    image: 'https://alurakut.vercel.app/capa-comunidade-01.jpg'
-  }])
+  const [comunity, setComunity] = useState([])
   const favoritePeople = [
     {name: 'juunegreiros', id: 1 }, 
     {name: 'omariosouto', id: 2}, 
@@ -41,19 +37,53 @@ export default function Home() {
     fetch('https://api.github.com/users/omariosouto/followers')
       .then((response) => response.json())
       .then((response) => setSeguidores(response))
+
+    fetch('https://graphql.datocms.com/', {
+      method: 'POST',
+      headers: {
+        'Authorization': '2c16929835f2068184ec8b0e297633',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({ 'query': `query {
+        allCommunities {
+          id
+          title
+          imageUrl
+          creatorSlug
+        }
+      }` })
+    })
+    .then((response) => response.json())
+    .then((response) => {
+      const comunityFromDato = response.data.allCommunities
+      setComunity(comunityFromDato)
+    })
   } , [])
-  
 
   const handleSubmitForm = (e) => {
     e.preventDefault()
     const dataForm = new FormData(e.target)
 
     const comunidade = {
-      id: new Date().toISOString(),
       title: dataForm.get('title'),
-      image: dataForm.get('image')
+      imageUrl: dataForm.get('image'),
+      creatorSlug: githubUser,
     }
-    setComunity([...comunity, comunidade])
+
+    fetch('/api/communities', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(comunidade)
+    })
+    .then(async (response) => {
+      const dados = await response.json()
+      const comunidade = dados.registroCriado
+      setComunity([...comunity, comunidade])
+    })
+
   }
 
   return (
