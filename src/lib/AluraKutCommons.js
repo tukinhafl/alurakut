@@ -367,6 +367,14 @@ const AlurakutLoginScreen = css`
       @media(min-width: 860px) {
         min-height: 368px;
       }
+
+      .orkutuka {
+        font-size: 2.5rem;
+        color: #D81D99;
+        margin-bottom: 36px;
+        max-height: 45px;
+      }
+
       p {
         font-size: 12px;
         line-height: 1.2;
