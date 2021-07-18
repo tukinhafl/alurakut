@@ -1,14 +1,13 @@
 # OrkuTuka
 
 <div align="center">
-  <img height=300px width=1000px src="https://imgur.com/Uc5NQnS" alt="Tela de login OrkuTuka" border="0">
+  <img height=300px width=1000px src="https://i.imgur.com/Uc5NQnS.png" alt="Tela de login OrkuTuka" border="0">
 </div>
 
 <h1 align="center">Cópia do Orkut.</h1>
 
 <h4 align="center"> 
-	�![image](https://user-images.githubusercontent.com/86307304/126084286-88268337-6a13-498a-aa68-b89da9684d54.png)
- Projeto em construção. �![image](https://user-images.githubusercontent.com/86307304/126084279-03f3c01e-5989-41f9-8462-4da010366610.png)
+ :no_entry_sign: Projeto em construção. :no_entry_sign: 
 
 </h4>
 
