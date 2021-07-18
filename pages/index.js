@@ -6,7 +6,7 @@ import { AlurakutMenu, AlurakutProfileSidebarMenuDefault, OrkutNostalgicIconSet 
 import { useEffect, useState } from 'react'
 import { ProfileComponentBox } from '../src/components/ProfileRelations'
 
-const ProfileSidebar = (props) => {
+export const ProfileSidebar = (props) => {
   return(
     <Box as='aside'>
       <img src={`https://github.com/${props.githubUser}.png`} style={{ borderRadius: '8px' }} />
@@ -17,7 +17,7 @@ const ProfileSidebar = (props) => {
         </a>
       </p>
       <hr />
-      <AlurakutProfileSidebarMenuDefault />
+      <AlurakutProfileSidebarMenuDefault array={props.seguidores, props.comunity, props.favoritePeople}/>
     </Box>
   )
 }
@@ -34,11 +34,15 @@ export default function Home( props ) {
     {name: 'phmc99', id: 6}
   ]
   const [seguidores, setSeguidores] = useState([])
+  const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
-    fetch('https://api.github.com/users/omariosouto/followers')
+    const endpoint = 'https://api.github.com/users/omariosouto/followers'
+    const endpointConfigured = `${endpoint}?per_page=9&page=${currentPage}`
+    fetch(endpointConfigured)
       .then((response) => response.json())
-      .then((response) => setSeguidores(response))
+      .then((response) => setSeguidores([...seguidores, ...response]))
+      console.log(seguidores)
 
     fetch('https://graphql.datocms.com/', {
       method: 'POST',
@@ -61,7 +65,20 @@ export default function Home( props ) {
       const comunityFromDato = response.data.allCommunities
       setComunity(comunityFromDato)
     })
-  } , [])
+  } , [currentPage])
+
+  useEffect(() => {
+    const intersectionObserver = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        console.log('Eleento esta visivel')
+        setCurrentPage((currentPageInsideState) => currentPageInsideState + 1)
+      }
+    })
+
+    intersectionObserver.observe(document.querySelector('#sentinela'))
+
+    return () => intersectionObserver.disconnect()
+  }, [])
 
   const handleSubmitForm = (e) => {
     e.preventDefault()
@@ -93,7 +110,7 @@ export default function Home( props ) {
       <AlurakutMenu githubUser={githubUser}/>
       <MainGrid>
         <div className='profileArea' style={{ gridArea: 'profileArea' }}>
-          <ProfileSidebar githubUser={githubUser}/>
+          <ProfileSidebar githubUser={githubUser} array={seguidores, comunity, favoritePeople}/>
         </div>
         <div className='wellcomeArea' style={{ gridArea: 'wellcomeArea' }}>
           <Box>

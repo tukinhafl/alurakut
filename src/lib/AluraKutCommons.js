@@ -24,7 +24,7 @@ export function AlurakutMenu({ githubUser }) {
   return (
     <AlurakutMenu.Wrapper isMenuOpen={isMenuOpen}>
       <div className="container">
-        <AlurakutMenu.Logo src={`${BASE_URL}/logo.svg`} />
+        <p className='orkutuka'>OrkuTuka</p>
 
         <nav style={{ flex: 1 }}>
           {[{ name: 'Inicio', slug: '/'}, {name: 'Amigos', slug: '/amigos'}, {name: 'Comunidades', slug: '/comunidades'}].map((menuItem) => (
@@ -35,7 +35,7 @@ export function AlurakutMenu({ githubUser }) {
         </nav>
 
         <nav>
-          <a href={`/logout`}>
+          <a href={`/login`}>
             Sair
           </a>
           <div>
@@ -103,6 +103,13 @@ AlurakutMenu.Wrapper = styled.header`
     z-index: 101;
     @media(min-width: 860px) {
       justify-content: flex-start;
+
+    .orkutuka {
+      font-weight: bold;
+      font-size: 1.25rem;
+      color: #ff00f6;
+      padding: 7px 16px;
+    }
     }
     button {
       border: 0;
@@ -192,7 +199,7 @@ export function AlurakutProfileSidebarMenuDefault() {
           <img src={`${BASE_URL}/icons/user.svg`} />
             Perfil
           </a>
-        <a href="/">
+        <a href="/scraps">
           <img src={`${BASE_URL}/icons/book.svg`} />
             Recados
           </a>
@@ -211,7 +218,7 @@ export function AlurakutProfileSidebarMenuDefault() {
           <img src={`${BASE_URL}/icons/plus.svg`} />
             GitHub Trends
           </a>
-        <a href="/logout">
+        <a href="/login">
           <img src={`${BASE_URL}//icons/logout.svg`} />
             Sair
           </a>

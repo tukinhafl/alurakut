@@ -2,6 +2,15 @@ import React from 'react';
 // Hook do NextJS
 import { useRouter } from 'next/router';
 import nookies from 'nookies';
+import styled from 'styled-components'
+
+const ErrorMessage = styled.p`
+  position: absolute;
+  bottom: 5px;
+  color: red;
+  font-size: 0.75rem;
+  text-align: center;
+`
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -11,7 +20,6 @@ export default function LoginScreen() {
     <main style={{ display: 'flex', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <div className="loginScreen">
         <section className="logoArea">
-          {/* <img src="https://alurakut.vercel.app/logo.svg" /> */}
           <span className='orkutuka'>OrkuTuka</span>
 
           <p><strong>Conecte-se</strong> aos seus amigos e familiares usando recados e mensagens instantâneas</p>
@@ -43,17 +51,20 @@ export default function LoginScreen() {
             <p>
               Acesse agora mesmo com seu usuário do <strong>GitHub</strong>!
           </p>
-            <input
-                placeholder="Usuário"
-                value={githubUser}
-                onChange={(e) => {
-                    setGithubUser(e.target.value)
-                }}
-            />
-            {githubUser.length === 0
-                ? 'Preencha o campo'
-                : ''
-            }
+            <div style={{ width: '100%', position: 'relative' }}>
+              <input
+                  style={{ marginBottom: '24px' }}
+                  placeholder="Usuário"
+                  value={githubUser}
+                  onChange={(e) => {
+                      setGithubUser(e.target.value)
+                  }}
+              />
+              {githubUser.length === 0
+                  ? <ErrorMessage>Preencha o campo acima</ErrorMessage>
+                  : ''
+              }
+            </div>
             <button type="submit">
               Login
             </button>
